@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.presentation.adicionarDisputas.AdicionarDisputasFragment">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/Theme.Arremate.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            app:title="@string/text_adicionarDisputas"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@android:color/holo_blue_bright"
+            app:popupTheme="@style/Theme.Arremate.PopupOverlay" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="ExtraText">
+
+
+        <AutoCompleteTextView
+            android:id="@+id/etProdutoNew"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/etMarcaNew"
+            app:layout_constraintStart_toStartOf="@+id/etMarcaNew"
+            app:layout_constraintTop_toBottomOf="@+id/etMarcaNew" />
+
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_nome"
+            app:layout_constraintBottom_toTopOf="@+id/etProdutoNew"
+            app:layout_constraintStart_toStartOf="@+id/etProdutoNew" />
+
+        <AutoCompleteTextView
+            android:id="@+id/etModeloNew"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/etProdutoNew"
+            app:layout_constraintStart_toStartOf="@+id/etProdutoNew"
+            app:layout_constraintTop_toBottomOf="@+id/etProdutoNew" />
+
+        <TextView
+            android:id="@+id/textView10"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_categoria"
+            app:layout_constraintBottom_toTopOf="@+id/etCategoriaNew"
+            app:layout_constraintStart_toStartOf="@+id/etCategoriaNew" />
+
+        <TextView
+            android:id="@+id/textView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_marca"
+            app:layout_constraintBottom_toTopOf="@+id/etMarcaNew"
+            app:layout_constraintStart_toStartOf="@+id/etMarcaNew" />
+
+        <TextView
+            android:id="@+id/textView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_modelo"
+            app:layout_constraintBottom_toTopOf="@+id/etModeloNew"
+            app:layout_constraintStart_toStartOf="@+id/etModeloNew" />
+
+        <!-- Continuous slider -->
+
+        <Button
+            android:id="@+id/btnCriarDisputa"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginBottom="20dp"
+            android:text="@string/btn_adicionarDisputas"
+            app:backgroundTint="#ff00ddff"
+            app:layout_constraintBottom_toTopOf="@+id/btBackAdicionarDisputas"
+            app:layout_constraintEnd_toEndOf="@+id/btBackAdicionarDisputas"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/btBackAdicionarDisputas"
+            app:layout_constraintTop_toBottomOf="@+id/rsValores" />
+
+        <Button
+            android:id="@+id/btBackAdicionarDisputas"
+            android:layout_width="188dp"
+            android:layout_height="47dp"
+            android:layout_marginBottom="24dp"
+            android:text="@string/button_back"
+            app:backgroundTint="#ff00ddff"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.452"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <com.google.android.material.slider.RangeSlider
+            android:id="@+id/rsValores"
+            android:layout_width="371dp"
+            android:layout_height="46dp"
+            android:layout_marginTop="64dp"
+            android:valueFrom="0.0"
+            android:valueTo="10000.0"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/etDescricao"
+            app:thumbColor="#ff00ddff"
+            app:trackColorActive="#ff00ddff"
+            app:trackColorInactive="#3100DDFF"
+            app:values="@array/initial_slider_values" />
+
+        <TextView
+            android:id="@+id/tvLow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R$"
+            app:layout_constraintEnd_toStartOf="@+id/etLow"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/etLow" />
+
+        <TextView
+            android:id="@+id/tvHigh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="R$"
+            app:layout_constraintEnd_toStartOf="@+id/etHigh"
+            app:layout_constraintTop_toTopOf="@+id/etHigh" />
+
+        <EditText
+            android:id="@+id/etLow"
+            android:layout_width="91dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="4dp"
+            android:layout_marginBottom="4dp"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintBottom_toTopOf="@+id/rsValores"
+            app:layout_constraintStart_toStartOf="@+id/rsValores" />
+
+        <EditText
+            android:id="@+id/etHigh"
+            android:layout_width="91dp"
+            android:layout_height="40dp"
+            android:layout_marginEnd="4dp"
+            android:ems="10"
+            android:inputType="number"
+            app:layout_constraintBottom_toTopOf="@+id/rsValores"
+            app:layout_constraintEnd_toEndOf="@+id/rsValores" />
+
+        <EditText
+            android:id="@+id/etDescricao"
+            android:layout_height="wrap_content"
+            android:layout_width="202dp"
+            android:layout_marginTop="32dp"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:scrollbars="vertical"
+            app:layout_constraintEnd_toEndOf="@+id/etModeloNew"
+            app:layout_constraintStart_toStartOf="@+id/etModeloNew"
+            app:layout_constraintTop_toBottomOf="@+id/etModeloNew" />
+
+        <TextView
+            android:id="@+id/textView14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/text_descricao"
+            app:layout_constraintBottom_toTopOf="@+id/etDescricao"
+            app:layout_constraintStart_toStartOf="@+id/etDescricao" />
+
+        <AutoCompleteTextView
+            android:id="@+id/etCategoriaNew"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginEnd="100dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <AutoCompleteTextView
+            android:id="@+id/etMarcaNew"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="@+id/etCategoriaNew"
+            app:layout_constraintStart_toStartOf="@+id/etCategoriaNew"
+            app:layout_constraintTop_toBottomOf="@+id/etCategoriaNew" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</FrameLayout>

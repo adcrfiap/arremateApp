@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">arremate</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_userdata">Dados Cadastrais</string>
+    <string name="action_logout">Logout</string>
+
+    <string name="menu_home">Disputas</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="loading_message_processing">Loading....</string>
+
+
+    <string name="menu_email">Email</string>
+    <string name="menu_senha">Senha</string>
+    <string name="menu_confirmarSenha">Confirmar Senha</string>
+    <string name="menu_name">Nome</string>
+    <string name="button_login">LOGIN</string>
+    <string name="button_signup">CADASTRAR</string>
+    <string name="button_back">VOLTAR</string>
+    <string name="link_signup">CADASTRAR</string>
+    <string name="text_adicionarDisputas">CRIAR DISPUTA</string>
+    <string name="btn_adicionarDisputas">CRIAR</string>
+    <string name="text_modelo">Modelo</string>
+    <string name="text_nome">Produto</string>
+    <string name="text_categoria">Categoria</string>
+    <string name="text_marca">Marca</string>
+    <string name="text_id">ID</string>
+    <string name="text_descricao">Descrição</string>
+    <string name="sobrenome">Sobrenome</string>
+    <string name="cpf">CPF</string>
+    <string name="celular">Celular</string>
+    <string name="usuario">Usuario</string>
+</resources>

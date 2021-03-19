@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_nav_graph"
+    app:startDestination="@id/disputasFragment">
+
+    <include app:graph="@navigation/login_nav_graph" />
+    <fragment
+        android:id="@+id/disputasFragment"
+        android:name="br.com.fiap.arremate.ui.presentation.disputas.DisputasFragment"
+        android:label="fragment_disputas"
+        tools:layout="@layout/fragment_disputas" >
+        <action
+            android:id="@+id/action_disputasFragment_to_adicionarDisputasFragment"
+            app:destination="@id/adicionarDisputasFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/adicionarDisputasFragment"
+        android:name="br.com.fiap.arremate.ui.presentation.adicionarDisputas.AdicionarDisputasFragment"
+        android:label="fragment_adicionar_disputas"
+        tools:layout="@layout/fragment_adicionar_disputas" />
+</navigation>
