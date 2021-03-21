@@ -16,4 +16,8 @@ class IntencaoRepositoryImpl(
     override suspend fun create(newIntencao: NewIntencao): RequestState<NewIntencao> {
         return intencaoRemoteDataSource.create(newIntencao)
     }
+
+    override suspend fun delete(id: String): RequestState<String> {
+        return intencaoRemoteDataSource.delete(id)
+    }
 }

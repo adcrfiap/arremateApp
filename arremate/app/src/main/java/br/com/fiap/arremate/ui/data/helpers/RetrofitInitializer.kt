@@ -10,7 +10,7 @@ class RetrofitInitializer {
 
     private val retrofitIntencao = Retrofit.Builder()
 //        .baseUrl("https://services.odata.org/")
-        .baseUrl("http://192.168.15.19:8081/")
+        .baseUrl("https://ms-intensao.herokuapp.com/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -20,7 +20,7 @@ class RetrofitInitializer {
             .build()
 
     private val retrofitMasterdata = Retrofit.Builder()
-            .baseUrl("http://192.168.15.19:8080/")
+            .baseUrl("https://ms--produto.herokuapp.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

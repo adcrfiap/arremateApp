@@ -25,6 +25,7 @@ class ListIntencaoAdapter internal constructor(
         val intencaoCategoriaView: TextView = itemView.findViewById(R.id.tvCategoria)
         val intencaoModeloView: TextView = itemView.findViewById(R.id.tvModelo)
         val intencaoIdView: TextView = itemView.findViewById(R.id.tvid)
+        val btnDelete: TextView = itemView.findViewById(R.id.btnDelete)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IntencaoViewHolder {
@@ -46,6 +47,11 @@ class ListIntencaoAdapter internal constructor(
         holder.itemView?.setOnClickListener { view ->
             Snackbar.make(view, "Você cliclou no item $position", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
+        }
+
+        holder.btnDelete.setOnClickListener { view ->
+
+            this.homeViewModel?.deleteIntencao(current.idIntensao.toString())
         }
 
     }

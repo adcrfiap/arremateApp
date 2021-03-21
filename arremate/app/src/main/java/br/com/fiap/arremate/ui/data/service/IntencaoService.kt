@@ -3,9 +3,7 @@ package br.com.fiap.arremate.ui.data.service
 import br.com.fiap.arremate.ui.domain.entity.Intencao
 import br.com.fiap.arremate.ui.domain.entity.NewIntencao
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface IntencaoService {
 
@@ -16,4 +14,7 @@ interface IntencaoService {
 
     @POST("/intensao")
     fun createIntencao(@Body newIntencao: NewIntencao): Call<Intencao>
+
+    @DELETE("/intensao/{id}")
+    fun deleteIntencao(@Path("id") id: String): Call<Intencao>
 }

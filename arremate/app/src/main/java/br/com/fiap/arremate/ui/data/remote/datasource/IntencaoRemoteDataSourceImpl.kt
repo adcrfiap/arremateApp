@@ -5,6 +5,7 @@ import br.com.fiap.arremate.ui.domain.entity.Intencao
 import br.com.fiap.arremate.ui.domain.entity.NewIntencao
 import br.com.fiap.arremate.ui.domain.entity.RequestState
 import br.com.fiap.arremate.ui.domain.expcetions.IntencaoNotCreatedException
+import br.com.fiap.arremate.ui.domain.expcetions.IntencaoNotDeletedException
 import br.com.fiap.arremate.ui.domain.expcetions.UserNotCreatedException
 
 import retrofit2.awaitResponse
@@ -38,6 +39,17 @@ class IntencaoRemoteDataSourceImpl (
         } catch (e: java.lang.Exception) {
             RequestState.Error(e)
         }
+    }
+
+    override suspend fun delete(id: String): RequestState<String> {
+        val call = RetrofitInitializer().intencaoService().deleteIntencao(id).awaitResponse()
+
+        if (call.code().toString() != "204"){
+            return RequestState.Error( IntencaoNotDeletedException())
+        }else{
+            return  RequestState.Success("true")
+        }
+
     }
 
 

@@ -10,8 +10,10 @@ import br.com.fiap.arremate.R
 import br.com.fiap.arremate.ui.data.remote.datasource.IntencaoRemoteDataSourceImpl
 import br.com.fiap.arremate.ui.data.repository.IntencaoRepositoryImpl
 import br.com.fiap.arremate.ui.domain.entity.RequestState
+import br.com.fiap.arremate.ui.domain.usecases.DeleteIntencaoUseCase
 import br.com.fiap.arremate.ui.domain.usecases.ListIntencaoUseCase
 import br.com.fiap.arremate.ui.presentation.base.BaseFragment
+import com.google.android.material.snackbar.Snackbar
 
 
 class HomeFragment : BaseFragment() {
@@ -23,6 +25,13 @@ class HomeFragment : BaseFragment() {
                 this,
                 HomeViewModelFactory(
                         ListIntencaoUseCase(
+                                IntencaoRepositoryImpl(
+                                        IntencaoRemoteDataSourceImpl(
+
+                                        )
+                                )
+                        ),
+                        DeleteIntencaoUseCase(
                                 IntencaoRepositoryImpl(
                                         IntencaoRemoteDataSourceImpl(
 
@@ -41,12 +50,12 @@ class HomeFragment : BaseFragment() {
         recyclerView.layoutManager = LinearLayoutManager(view.context)
 
 
-        registerObserver(adapter)
+        registerObserver(adapter, view)
         homeViewModel.listIntencao()
 
     }
 
-    private fun registerObserver(adapter: ListIntencaoAdapter) {
+    private fun registerObserver(adapter: ListIntencaoAdapter, view: View) {
 
         this.homeViewModel.ListIntencaoState.observe(viewLifecycleOwner, Observer {
             when (it) {
@@ -58,6 +67,20 @@ class HomeFragment : BaseFragment() {
 
                     adapter.setModel(homeViewModel)
 
+                }
+            }
+        })
+
+        this.homeViewModel.deleteIntencaoState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is RequestState.Success -> {
+                    homeViewModel.listIntencao()
+                    Snackbar.make(view, "Você deletou uma intenção", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show()
+                }
+                is RequestState.Error -> {
+                    Snackbar.make(view, "Não foi possivel remover intenção", Snackbar.LENGTH_LONG)
+                            .setAction("Action", null).show()
                 }
             }
         })
