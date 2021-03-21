@@ -4,6 +4,8 @@ import br.com.fiap.arremate.ui.data.helpers.RetrofitInitializer
 import br.com.fiap.arremate.ui.domain.entity.Intencao
 import br.com.fiap.arremate.ui.domain.entity.NewIntencao
 import br.com.fiap.arremate.ui.domain.entity.RequestState
+import br.com.fiap.arremate.ui.domain.expcetions.IntencaoNotCreatedException
+import br.com.fiap.arremate.ui.domain.expcetions.UserNotCreatedException
 
 import retrofit2.awaitResponse
 
@@ -15,7 +17,7 @@ class IntencaoRemoteDataSourceImpl (
 
         val call = RetrofitInitializer().intencaoService().list().awaitResponse()
 
-        queryResult = call.body()?.intencoes?.toMutableList() ?: mutableListOf<Intencao>()
+        queryResult = call.body()?.toMutableList() ?: mutableListOf<Intencao>()
 
         return  RequestState.Success(queryResult)
 
@@ -24,7 +26,14 @@ class IntencaoRemoteDataSourceImpl (
     override suspend fun create(newIntencao: NewIntencao): RequestState<NewIntencao> {
         return try {
 
-            RequestState.Success(newIntencao)
+            val call = RetrofitInitializer().intencaoService().createIntencao(newIntencao).awaitResponse()
+
+            if (call.code().toString() != "201"){
+                return RequestState.Error( IntencaoNotCreatedException())
+            }else{
+                val compradorResp = call.body()!!
+                return  RequestState.Success(newIntencao)
+            }
 
         } catch (e: java.lang.Exception) {
             RequestState.Error(e)

@@ -10,16 +10,20 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import br.com.fiap.arremate.R
 import br.com.fiap.arremate.ui.data.remote.datasource.IntencaoRemoteDataSourceImpl
+import br.com.fiap.arremate.ui.data.remote.datasource.MasterdataDataSourceImpl
 import br.com.fiap.arremate.ui.data.repository.IntencaoRepositoryImpl
-import br.com.fiap.arremate.ui.domain.entity.ListHelp
-import br.com.fiap.arremate.ui.domain.entity.LoginSession
-import br.com.fiap.arremate.ui.domain.entity.NewIntencao
-import br.com.fiap.arremate.ui.domain.entity.RequestState
+import br.com.fiap.arremate.ui.data.repository.MasterdataRepositoryImpl
+import br.com.fiap.arremate.ui.domain.entity.*
 import br.com.fiap.arremate.ui.domain.usecases.AdicionarIntencaoUseCase
+import br.com.fiap.arremate.ui.domain.usecases.ListCategoriasUseCase
+import br.com.fiap.arremate.ui.domain.usecases.ListMarcasUseCase
+import br.com.fiap.arremate.ui.domain.usecases.ListProdutosUseCase
 import br.com.fiap.arremate.ui.presentation.base.BaseFragment
 import com.google.android.material.slider.LabelFormatter
 import com.google.android.material.slider.RangeSlider
 import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.time.LocalDate
 import java.util.*
 
 
@@ -41,6 +45,7 @@ class AdicionarDisputasFragment : BaseFragment() {
     private var stringArrayP: ArrayList<ListHelp> = arrayListOf()
     private var stringArrayM: ArrayList<ListHelp> = arrayListOf()
     private var stringArrayMo: ArrayList<ListHelp> = arrayListOf()
+    private var idProduto: Number = 0
 
     private val adicionarDisputasViewModel: AdicionarDisputasViewModel by lazy {
         ViewModelProvider(
@@ -52,6 +57,27 @@ class AdicionarDisputasFragment : BaseFragment() {
 
                         )
                     )
+                ),
+                 ListCategoriasUseCase(
+                   MasterdataRepositoryImpl(
+                      MasterdataDataSourceImpl(
+
+                      )
+                   )
+                 ),
+                ListMarcasUseCase(
+                        MasterdataRepositoryImpl(
+                                MasterdataDataSourceImpl(
+
+                                )
+                        )
+                ),
+                ListProdutosUseCase(
+                        MasterdataRepositoryImpl(
+                                MasterdataDataSourceImpl(
+
+                                )
+                        )
                 )
             )
         ).get(AdicionarDisputasViewModel::class.java)
@@ -64,7 +90,13 @@ class AdicionarDisputasFragment : BaseFragment() {
         setUpListener(view)
         registerBackPressedAction()
         registerObserver(view)
+        registerLists()
+    }
 
+    private fun registerLists() {
+        adicionarDisputasViewModel.listCategorias()
+        adicionarDisputasViewModel.listMarcas()
+        adicionarDisputasViewModel.listProdutos()
     }
 
     private fun registerObserver(view: View) {
@@ -82,6 +114,34 @@ class AdicionarDisputasFragment : BaseFragment() {
                 }
             }
         })
+
+
+        this.adicionarDisputasViewModel.listCategoriasState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is RequestState.Success -> {
+                    val list: List<Categoria> = it.data.toList()
+                    fillListCategoria(view, list)
+                }
+            }
+        })
+
+        this.adicionarDisputasViewModel.listMarcasState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is RequestState.Success -> {
+                    val list: List<Marca> = it.data.toList()
+                    fillListMarca(view, list)
+                }
+            }
+        })
+
+        this.adicionarDisputasViewModel.listProdutosState.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is RequestState.Success -> {
+                    val list: List<Produto> = it.data.toList()
+                    fillListProduto(view, list)
+                }
+            }
+        })
     }
 
     private fun setUpListener(view: View) {
@@ -90,10 +150,13 @@ class AdicionarDisputasFragment : BaseFragment() {
         }
 
         btnCriarDisputa.setOnClickListener{
-            var newIntencao: NewIntencao = NewIntencao(1,LoginSession.userId,
-                                                            etLow.text.toString().toLong(),
-                                                            etHigh.text.toString().toLong(),
-                                                            etDescricaoNew.text.toString())
+            val sdf = SimpleDateFormat("dd-MM-yyyy")
+            val currentDate = sdf.format(Date())
+            var newIntencao: NewIntencao = NewIntencao(currentDate,etDescricaoNew.text.toString(),
+                                                        LoginSession.userId, 6,
+                                                        idProduto, etHigh.text.toString().toLong()
+
+                                                       )
 
             adicionarDisputasViewModel.create(newIntencao)
         }
@@ -108,7 +171,6 @@ class AdicionarDisputasFragment : BaseFragment() {
 
         etMarcaNew.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus){
-                fillListMarca(view)
                 etMarcaNew.showDropDown()
 
 //           Verifica se é uma valor valido da lista, se não for limpa o campo
@@ -134,9 +196,8 @@ class AdicionarDisputasFragment : BaseFragment() {
         }
 
         etProdutoNew.setOnFocusChangeListener { v, hasFocus ->
-            var listHelp: ListHelp
+            var listHelp: ListHelp = ListHelp(0,"")
             if(hasFocus){
-                fillListProduto(view)
                 etProdutoNew.showDropDown()
 
 //           Verifica se é uma valor valido da lista, se não for limpa o campo
@@ -157,6 +218,8 @@ class AdicionarDisputasFragment : BaseFragment() {
 
                 if (invalido){
                     etProdutoNew.setText("")
+                }else{
+                    idProduto = listHelp.id
                 }
 
             }
@@ -192,7 +255,7 @@ class AdicionarDisputasFragment : BaseFragment() {
 
         etCategoriaNew.setOnFocusChangeListener { v, hasFocus ->
             if(hasFocus){
-                fillListCategoria(view)
+
                 etCategoriaNew.showDropDown()
 
 //           Verifica se é uma valor valido da lista, se não for limpa o campo
@@ -236,14 +299,14 @@ class AdicionarDisputasFragment : BaseFragment() {
         etModeloNew.setAdapter(adapterModelo) //setting the adapter data into the AutoCompleteTextView
     }
 
-    private fun fillListMarca(view: View) {
+    private fun fillListMarca(view: View, marcas : List<Marca>) {
         val adapterMarca: ArrayAdapter<ListHelp>
 
 //        Configrua Marca
         stringArrayM.clear()
-        stringArrayM.add(ListHelp(1,"Marca 1"))
-        stringArrayM.add(ListHelp(2,"Marca 2"))
-        stringArrayM.add(ListHelp(3,"Marca 3"))
+        for (i in 0 until marcas.count()) {
+            stringArrayM.add(ListHelp(marcas[i].id,marcas[i].nome))
+        }
 
         adapterMarca = ArrayAdapter<ListHelp>(view.context, android.R.layout.simple_spinner_dropdown_item, stringArrayM)
 
@@ -252,16 +315,14 @@ class AdicionarDisputasFragment : BaseFragment() {
         etMarcaNew.setAdapter(adapterMarca) //setting the adapter data into the AutoCompleteTextView
     }
 
-    private fun fillListProduto(view: View) {
+    private fun fillListProduto(view: View, produtos: List<Produto>) {
         val adapterProduto: ArrayAdapter<ListHelp>
 
 //        Configrua Produto
         stringArrayP.clear()
-        stringArrayP.add(ListHelp(1,"Produto 1"))
-        stringArrayP.add(ListHelp(2,"Produto 2"))
-        stringArrayP.add(ListHelp(3,"Produto 3"))
-
-
+        for (i in 0 until produtos.count()) {
+            stringArrayP.add(ListHelp(produtos[i].id,produtos[i].nome))
+        }
 
         adapterProduto = ArrayAdapter<ListHelp>(view.context, android.R.layout.simple_spinner_dropdown_item, stringArrayP)
 
@@ -270,18 +331,15 @@ class AdicionarDisputasFragment : BaseFragment() {
         etProdutoNew.setAdapter(adapterProduto) //setting the adapter data into the AutoCompleteTextView
     }
 
-    private fun fillListCategoria(view: View) {
+    private fun fillListCategoria(view: View, categorias: List<Categoria>) {
         val adapterCategoria: ArrayAdapter<ListHelp>
 
         //    Configura Categoria
         stringArray.clear()
-        stringArray.add(ListHelp(1,"Categoria 1"))
-        stringArray.add(ListHelp(2,"Categoria 2"))
-        stringArray.add(ListHelp(3,"Categoria 3"))
-        stringArray.add(ListHelp(4,"Categoria 4"))
-        stringArray.add(ListHelp(5,"Categoria 5"))
 
-
+        for (i in 0 until categorias.count()) {
+            stringArray.add(ListHelp(categorias[i].id,categorias[i].nome))
+        }
 
         adapterCategoria = ArrayAdapter<ListHelp>(view.context, android.R.layout.simple_spinner_dropdown_item, stringArray)
 

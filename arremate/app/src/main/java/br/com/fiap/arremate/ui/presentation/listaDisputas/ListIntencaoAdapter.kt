@@ -38,10 +38,10 @@ class ListIntencaoAdapter internal constructor(
     override fun onBindViewHolder(holder: IntencaoViewHolder, position: Int) {
         val current = intencoes[position]
 
-        holder.intencaoNomeView.text = current.produto
-        holder.intencaoCategoriaView.text = current.categoria
-        holder.intencaoModeloView.text = current.modelo
-        holder.intencaoIdView.text = current.id.toString()
+        holder.intencaoNomeView.text = current.descricao
+        holder.intencaoCategoriaView.text = current.valorMinimo
+        holder.intencaoModeloView.text = current.data
+        holder.intencaoIdView.text = current.idIntensao.toString()
 
         holder.itemView?.setOnClickListener { view ->
             Snackbar.make(view, "Você cliclou no item $position", Snackbar.LENGTH_LONG)

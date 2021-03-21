@@ -3,21 +3,24 @@ package br.com.fiap.arremate.ui.domain.entity
 import com.google.gson.annotations.SerializedName
 
 data class Intencao(
-        @SerializedName("ProductID")
-        val id: Number,
+        @SerializedName("idIntensao")
+        val idIntensao: Number,
 
-        @SerializedName("ProductName")
-        val produto: String,
+        @SerializedName("idProduto")
+        val idProduto: String,
 
-        @SerializedName("CategoryID")
-        val categoria: String,
+        @SerializedName("descricao")
+        val descricao: String,
 
-        @SerializedName("QuantityPerUnit")
-        val marca: String,
+        @SerializedName("valorEstimado")
+        val valorMinimo: String,
 
-        @SerializedName("UnitPrice")
-        val modelo: String
+        @SerializedName("idComprador")
+        val idComprador: String,
+
+        @SerializedName("data")
+        val data: String
 )
 {
-    constructor(): this(0,"","","","")
+    constructor(): this(0,"","","","","")
 }

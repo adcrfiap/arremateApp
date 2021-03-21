@@ -1,6 +1,7 @@
 package br.com.fiap.arremate.ui.data.helpers
 
 import br.com.fiap.arremate.ui.data.service.IntencaoService
+import br.com.fiap.arremate.ui.data.service.MasterdataService
 import br.com.fiap.arremate.ui.data.service.UserService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -8,7 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 class RetrofitInitializer {
 
     private val retrofitIntencao = Retrofit.Builder()
-        .baseUrl("https://services.odata.org/")
+//        .baseUrl("https://services.odata.org/")
+        .baseUrl("http://192.168.15.19:8081/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
@@ -17,7 +19,13 @@ class RetrofitInitializer {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
+    private val retrofitMasterdata = Retrofit.Builder()
+            .baseUrl("http://192.168.15.19:8080/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
     fun intencaoService() = retrofitIntencao.create(IntencaoService::class.java)
     fun userService() = retrofitUser.create(UserService::class.java)
+    fun masterDataService() = retrofitMasterdata.create(MasterdataService::class.java)
 
 }

@@ -1,5 +1,5 @@
 package br.com.fiap.arremate.ui.domain.expcetions
 
-class UserNotCreatedException : Exception("Usuario não logado") {
+class IntencaoNotCreatedException : Exception("Não foi possivel criar intensão de compra") {
 
 }

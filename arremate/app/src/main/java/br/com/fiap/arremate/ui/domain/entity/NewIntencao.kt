@@ -4,17 +4,25 @@ import com.google.gson.annotations.SerializedName
 
 data class NewIntencao(
 
-    val idProduto: Number,
+        @SerializedName("data")
+        val data: String,
 
-    val idCliente: Number,
+        @SerializedName("descricao")
+        val descricao: String,
 
-    val valorMinimo: Number,
+        @SerializedName("idComprador")
+        val idComprador: Number,
 
-    val valorMaximo: Number,
+        @SerializedName("idIntensao")
+        val idIntensao: Number,
 
-    val descricao: String
+        @SerializedName("idProduto")
+        val idProduto: Number,
+
+        @SerializedName("valorEstimado")
+        val valorEstimado: Number
 
 )
 {
-    constructor(): this(0,0,0, 0, "")
+    constructor(): this("","",0, 0, 0, 0)
 }
